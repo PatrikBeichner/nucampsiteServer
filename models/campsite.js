@@ -17,7 +17,7 @@ const commentSchema = new Schema(
       required: true,
     },
     author: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
   },
