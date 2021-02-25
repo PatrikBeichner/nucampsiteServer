@@ -11,8 +11,8 @@ favoriteRouter
   .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
   .get(cors.cors, authenticate.verifyUser, (req, res, next) => {
     Favorite.find({ user: req.user._id })
-      .populate('User')
-      .populate('Campsite')
+      .populate('user')
+      .populate('campsites')
       .then((favorite) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -74,7 +74,7 @@ favoriteRouter
     res.end(`GET operation not supported on /favorites/${req.params.campsiteId}`);
   })
   .post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
-    Favorite.findOne({ user: req.user._id }).then((fav) => {
+    Favorite.findOne({ user: req.user._id }).then((favorite) => {
       if (favorite) {
         if (!favorite.campsites.includes(req.params.campsiteId)) {
           favorite.campsites.push(req.params.campsiteId);
